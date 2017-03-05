@@ -1,0 +1,129 @@
+<!--
+
+
+  姓名【单行文本】（输入数字或者字母无效，只可输入2到4个汉字）
+性别【单选】
+所在城市【下拉列表，顶部为搜索框，参考淘宝收货地址选择】（描述：目前学习或者工作的地方）
+年龄【下拉列表，18—30岁，下拉列表，顶部为搜索框，参考淘宝收货地址选择】
+学校【单行文本】（描述：填写学校全称，已毕业的填写毕业院校）。
+身高【下拉列表，150—190，下拉列表，顶部为搜索框，参考淘宝收货地址选择】
+微信二维码名片【上传图片】（描述：请上传您的微信二维码名片，用于CP配对，退出表单后	之前填写的资料会保存哒！再次进入继续填写！）
+
+-->
+
+<ion-content>
+
+    <ion-list>
+
+        <ion-item>
+            <ion-label floating>姓名:</ion-label>
+            <ion-input type="text" maxlength="4"></ion-input>
+
+        </ion-item>
+        <ion-item>
+            <ion-label floating>手机号:</ion-label>
+            <ion-input type="text"></ion-input>
+
+        </ion-item>
+
+
+        <ion-item>
+            <ion-label floating>密码:</ion-label>
+            <ion-input type="password"></ion-input>
+        </ion-item>
+
+
+        <ion-item>
+            <ion-label>性别:</ion-label>
+            <ion-select [(ngModel)]="user.gender" cancelText="取消" okText="完成">
+                <ion-option value="男">男</ion-option>
+                <ion-option value="女">女</ion-option>
+            </ion-select>
+        </ion-item>
+
+        <!--年龄 -->
+        <ion-item (click)="selectAge()">
+            年龄:
+            <ion-note item-right>
+                {{user.age}}
+            </ion-note>
+        </ion-item>
+        <!--学校-->
+        <ion-item>
+            <ion-label floating>学校:</ion-label>
+            <ion-input type="text" maxlength="4"></ion-input>
+        </ion-item>
+
+        <!--身高-->
+        <ion-item (click)="selectHeight()">
+            年龄:
+            <ion-note item-right>
+                {{user.height}} cm
+            </ion-note>
+        </ion-item>
+
+
+        <!--个性签名-->
+        <ion-item *ngFor="let tag of tags" (click)="selectTags(tag)">
+            {{tag.tagName}}
+
+            <ion-note item-right>
+                {{user.tags[tag.tagName]?user.tags[tag.tagName].join(','):''}}
+            </ion-note>
+        </ion-item>
+
+
+        <!--
+  我看过的一部深有感触的电影【多行文本框】（默认：曾经看过《初恋50次》，很轻松很浪漫，温馨感动、每天都有激情，每天都是新鲜的，虽然余生都只能靠记忆延续，但生命因此而充实。）
+-->
+
+
+
+
+
+
+    </ion-list>
+    <!--问答题-->
+
+    <ion-card *ngFor="let anwser of user.anwsers">
+        <ion-card-header>
+            {{anwser.question}}:
+        </ion-card-header>
+        <ion-card-content>
+            <ion-textarea [(ngModel)]="anwser.value"></ion-textarea>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-list>
+        <ion-item>
+            <ion-label>对匹配年龄的要求:</ion-label>
+            <ion-select [(ngModel)]="user.filterAge" cancelText="取消" okText="完成">
+                <ion-option [value]="option" *ngFor="let option of filterAge.options">{{option.label}}</ion-option>
+
+            </ion-select>
+        </ion-item>
+
+        <!--对匹配性别的要求：【单选】（1.异性恋2.同性恋3.都可以）-->
+        <ion-item>
+            <ion-label>对匹配性别的要求:</ion-label>
+            <ion-select [(ngModel)]="user.filterGender" cancelText="取消" okText="完成">
+                <ion-option [value]="option" *ngFor="let option of filterGender.options">{{option.label}}</ion-option>
+
+            </ion-select>
+        </ion-item>
+
+        <!--对匹配地域的要求：【单选】（1.同城恋爱2.异地恋3.都可以）-->
+        <ion-item>
+            <ion-label>对匹配地域的要求:</ion-label>
+            <ion-select [(ngModel)]="user.filterCity" cancelText="取消" okText="完成">
+                <ion-option [value]="option" *ngFor="let option of filterCity.options">{{option.label}}</ion-option>
+
+            </ion-select>
+        </ion-item>
+
+    </ion-list>
+
+    <button ion-button full (click)="debugUser()">提交</button>
+
+
+</ion-content>

@@ -1,0 +1,60 @@
+<!--
+  Generated template for the TreatDetail page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>就诊记录</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-list>
+        <ion-item>
+            <ion-label>就诊时间:</ion-label>
+            <ion-datetime displayFormat="YY年MM月DD日" pickerFormat="YY MM DD" [(ngModel)]="data.date" cancelText="取消" doneText="完成"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>美容项目</ion-label>
+            <ion-note item-right *ngIf="!data.selectedBeautyProject"> <button ion-button color="primary" (click)="selectProject()">选择项目</button></ion-note>
+            <ion-note item-right *ngIf="data.selectedBeautyProject"><button ion-button color="secondary">{{data.selectedBeautyProject}}</button></ion-note>
+        </ion-item>
+    </ion-list>
+
+    <ion-grid class="treatImages">
+        <ion-row>
+            <ion-col width-25 *ngFor="let image of data.images">
+                <img [src]="image" alt="" class="img-responsive">
+            </ion-col>
+
+            <ion-col width-25>
+                <img src="../assets/images/plus.png" alt="" class="plus" (click)="imageSelect.click()">
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
+
+    <ion-grid>
+        <ion-textarea placeholder="描述就诊的内容" rows="10">
+
+        </ion-textarea>
+    </ion-grid>
+
+    <ion-list>
+        <ion-item>
+            <ion-label>预约治疗时间:</ion-label>
+            <ion-datetime displayFormat="YY年MM月DD日" pickerFormat="YYYY MM DD" [(ngModel)]="data.toCureDt"></ion-datetime>
+        </ion-item>
+    </ion-list>
+    <button ion-button full color="primary" (click)="toCure()">预约治疗</button>
+
+    <!--隐藏的文件选择框-->
+    <input type="file" #imageSelect hidden (change)="addImage(imageSelect)">
+
+</ion-content>

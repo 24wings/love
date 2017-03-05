@@ -1,0 +1,45 @@
+{
+    "issucess": true,
+    "toTreats": [{
+            "name": "小张",
+            "avatar": "../assets/images/head1.jpg",
+            "date": "2017-7-6 12:00:00"
+        },
+        {
+            "name": "小赵",
+            "avatar": "../assets/images/head2.jpg",
+            "date": "2017-7-6 12:00:00"
+        }, {
+            "name": "小钱",
+            "avatar": "../assets/images/head3.jpeg",
+            "date": "2017-7-6 12:00:00"
+        }, {
+            "name": "小孙",
+            "avatar": "../assets/images/head4.jpg",
+            "date": "2017-7-6 12:00:00"
+        }, {
+            "name": "小李",
+            "avatar": "../assets/images/head5.jpg",
+            "date": "2017-7-6 12:00:00"
+        }
+    ]
+
+    ,
+    "treateds": [{
+        "name": "小周",
+        "avatar": "../assets/images/head1.jpg",
+        "date": "2017-7-6 12:00:00"
+    }],
+    "toCures": [{
+        "name": "小吴",
+        "avatar": "../assets/images/head1.jpg",
+        "date": "2017-7-6 12:00:00"
+    }],
+    "cureds": [{
+        "name": "小郑",
+        "avatar": "../assets/images/head1.jpg",
+        "date": "2017-7-6 12:00:00"
+    }]
+
+
+}
