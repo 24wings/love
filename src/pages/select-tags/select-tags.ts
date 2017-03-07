@@ -16,8 +16,14 @@ export class SelectTagsPage {
     user: {},
     tag: {}
   }
+  selectedTag = {
+    tagName: '',
+    result: [],
+    options: []
+  }
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.data = this.navParams.data;
+    this.selectedTag = this.data.user.tags.find(tag => tag.tagName == this.data.tag.tagName);
   }
 
   ionViewDidLoad() {
@@ -58,17 +64,18 @@ export class SelectTagsPage {
     /**
      * 如果没有该标签
      */
-    if (this.data.user.tags[this.data.tag.tagName].indexOf(tag) == -1) {
-      this.data.user.tags[this.data.tag.tagName].push(tag);
+    console.log(tag, this.selectedTag.options);
+    if (this.selectedTag.result.indexOf(tag) == -1 && this.selectedTag.result.length <= 4) {
+      this.selectedTag.result.push(tag);
 
     }
 
   }
 
   deleteTag(tag: string) {
-    if (this.data.user.tags[this.data.tag.tagName].indexOf(tag) == -1) {
-      var index = this.data.user.tags[this.data.tag.tagName].indexOf(tag);
-      this.data.user.tags[this.data.tag.tagName].splice(index, 1);
+    if (this.selectedTag.result.indexOf(tag) != -1) {
+      var index = this.selectedTag.result.indexOf(tag);
+      this.selectedTag.result.splice(index, 1);
 
     }
   }

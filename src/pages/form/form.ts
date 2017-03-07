@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { SelectAgePage } from '../select-age/select-age';
 import { SelectHeightPage } from '../select-height/select-height';
 import { SelectTagsPage } from '../select-tags/select-tags';
@@ -19,9 +19,138 @@ import { Http } from '@angular/http';
   templateUrl: 'form.html'
 })
 export class FormPage {
+  phoneRegex = /^1[3-9]\d{9}$/;
   user = {
+    username: '',
     gender: '男',
-    tags: {},
+    phone: '',
+    password: '',
+    tags: [{
+      tagName: '我的社交名片',
+      options: [
+        "文艺青年",
+        "普通青年",
+        "有为青年",
+        "2B青年",
+        "学生",
+        "IT民工",
+        "自由职业者",
+        "上班族",
+        "潜力股",
+        "创业者",
+        "技术宅",
+        "小清新",
+        "月光族",
+        "乐活族",
+        "愤青",
+        "正太",
+        "萝莉",
+        "外貌协会"
+      ],
+      result: []
+    }, {
+      tagName: '我的兴趣爱好',
+      options: ["K歌", "旅行", "果粉", "购物狂", "美食", "电影", "摄影", "游戏", "手机控", "读书", "动漫", "爱狗", "爱猫", "运动", "电视剧", "桌游"],
+      result: []
+    }, {
+      tagName: '我的个性',
+      result: [],
+      options: [
+        "成熟",
+        "各种宅",
+        "幽默",
+        "爱时尚",
+        "执着",
+        "温柔",
+        "直率",
+        "闷骚",
+        "善良",
+        "低调",
+        "自由",
+        "阳光",
+        "乐观",
+        "完美主义",
+        "强迫症",
+        "自信",
+        "萌萌哒"
+      ]
+    }, {
+      tagName: '我现在的状态',
+      result: [
+
+      ],
+      options: [
+        "起床困难户",
+        "奋斗ing",
+        "加班ing",
+        "学习ing",
+        "减肥ing",
+        "寂寞ing",
+        "缺爱ing",
+        "成长ing"
+      ]
+    }, {
+      tagName: '我的口头语',
+      result: [],
+      options: [
+        "Word天",
+        "猴赛雷",
+        "厉害了",
+        "我也是醉了",
+        "你咋不上天嘞",
+        "蓝瘦香菇",
+        "洪荒之力",
+        "小目标",
+        "宝宝委屈",
+        "撩妹 / 撩汉",
+        "感觉身体被掏空",
+        "画面太美不敢看带我装逼带我飞",
+        "吓死宝宝了",
+        "开黑",
+        "老司机"
+      ]
+    }, {
+      tagName: '我的超能力（ 牛逼的人生无须解释）',
+      result: [],
+      options: [
+        "舌头打桃结",
+        "记忆力超强",
+        "过目不忘",
+        "力大无穷",
+        "晒不黑",
+        "狂吃不胖",
+        "没生过病",
+        "睁眼睡觉",
+        "耳朵能动",
+        "一字马",
+        "单个眉毛动",
+        "舌头舔鼻子",
+        "对眼",
+        "口吞拳头",
+        "长时憋气"
+      ]
+    }, {
+      tagName: '我的业余时间安排',
+      result: [],
+      options: [
+        "王者荣耀",
+        "英雄联盟",
+        "看书",
+        "篮球",
+        "手机",
+        "电影",
+        "音乐",
+        "涨知识",
+        "逛街",
+        "健身",
+        "约好友",
+        "旅行",
+        "娱乐八卦"
+      ]
+    }],
+
+    age: 18,
+    height: 175,
 
     anwsers: [{
       question: "我看过的一部深有感触的电影",
@@ -106,15 +235,12 @@ export class FormPage {
   };
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public http: Http) {
-    this.http.get('/assets/data/tags.json').map(res => res.json())
-      .subscribe(rtn => {
-     
-        this.tags = rtn;
-        rtn.forEach(tag => {
-          this.user.tags[tag.tagName] = [];
-        })
-      });
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public modalCtrl: ModalController,
+    public http: Http,
+    public alertCtrl: AlertController
+  ) {
   }
 
   ionViewDidLoad() {
@@ -135,6 +261,64 @@ export class FormPage {
 
   debugUser() {
     console.log(this.user);
+  }
+
+  checkRegister(): boolean {
+    var result = true;
+    var notNull = [
+      this.user.username,
+      this.user.gender,
+      this.user.age,
+      this.user.height,
+      this.user.password,
+      this.user.phone
+    ];
+    notNull.forEach(item => item ? '' : result = false);
+    this.user.tags.forEach(tag => tag.result.length > 0 ? '' : result = false);
+
+
+    return result;
+  }
+
+  registe() {
+    if (this.checkRegister()) {
+      this.phoneRegex.test(this.user.phone) ? this.sendRegisteRequest() : this.alertError('请填写合法的手机号');
+
+
+    } else {
+      this.alertError('您离填写完表单还有一小段距离哦')
+
+    }
+  }
+
+
+
+  sendRegisteRequest() {
+    this.http.post('http://localhost:3000/rest.player', this.user).subscribe(rtn => {
+      var result = rtn.json();
+      if (result.issuccess) {
+        /**
+         * 自动进入下一个报名通知页面
+         */
+
+      } else {
+        this.alertError(result.data);
+      }
+    });
+  }
+
+  alertError(errorMsg, timeout = 3000) {
+    var error = this.alertCtrl.create({
+      title: '温馨提示',
+      subTitle: errorMsg,
+      buttons: ['确定']
+    });
+    error.present();
+    setTimeout(function () {
+      error.dismiss()
+    }, timeout);
+
+
   }
 
 }
