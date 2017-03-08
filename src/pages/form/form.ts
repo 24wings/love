@@ -21,10 +21,10 @@ import { Http } from '@angular/http';
 export class FormPage {
   phoneRegex = /^1[3-9]\d{9}$/;
   user = {
-    username: '',
+    username: 'yang',
     gender: '男',
-    phone: '',
-    password: '',
+    phone: '13212780816',
+    password: '123',
     tags: [{
       tagName: '我的社交名片',
       options: [
@@ -47,14 +47,14 @@ export class FormPage {
         "萝莉",
         "外貌协会"
       ],
-      result: []
+      result: ['文艺青年']
     }, {
       tagName: '我的兴趣爱好',
       options: ["K歌", "旅行", "果粉", "购物狂", "美食", "电影", "摄影", "游戏", "手机控", "读书", "动漫", "爱狗", "爱猫", "运动", "电视剧", "桌游"],
-      result: []
+      result: ['K歌']
     }, {
       tagName: '我的个性',
-      result: [],
+      result: ['成熟'],
       options: [
         "成熟",
         "各种宅",
@@ -77,7 +77,7 @@ export class FormPage {
     }, {
       tagName: '我现在的状态',
       result: [
-
+        '起床困难户'
       ],
       options: [
         "起床困难户",
@@ -91,7 +91,7 @@ export class FormPage {
       ]
     }, {
       tagName: '我的口头语',
-      result: [],
+      result: ['Word天'],
       options: [
         "Word天",
         "猴赛雷",
@@ -111,7 +111,7 @@ export class FormPage {
       ]
     }, {
       tagName: '我的超能力（ 牛逼的人生无须解释）',
-      result: [],
+      result: ['舌头打桃结'],
       options: [
         "舌头打桃结",
         "记忆力超强",
@@ -131,7 +131,7 @@ export class FormPage {
       ]
     }, {
       tagName: '我的业余时间安排',
-      result: [],
+      result: ['王者荣耀'],
       options: [
         "王者荣耀",
         "英雄联盟",
@@ -300,11 +300,26 @@ export class FormPage {
         /**
          * 自动进入下一个报名通知页面
          */
+        console.log(result);
+        this.sendPostRequest(result.data._id);
 
       } else {
         this.alertError(result.data);
       }
     });
+  }
+
+  sendPostRequest(_id: String) {
+    this.http.get('http://localhost:3000/record/newRecord?_id=' + _id).subscribe(rtn => {
+      const result = rtn.json();
+      if (result.issuccess) {
+        console.log(result);
+      } else {
+        alert(result);
+      }
+    });
+
+
   }
 
   alertError(errorMsg, timeout = 3000) {
