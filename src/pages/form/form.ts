@@ -4,6 +4,7 @@ import { SelectAgePage } from '../select-age/select-age';
 import { SelectHeightPage } from '../select-height/select-height';
 import { SelectTagsPage } from '../select-tags/select-tags';
 import { Http } from '@angular/http';
+import { StatePage } from '../state/state';
 /*
 
   姓名【单行文本】（输入数字或者字母无效，只可输入2到4个汉字）
@@ -25,6 +26,7 @@ export class FormPage {
     gender: '男',
     phone: '13212780816',
     password: '123',
+    school: '文华学院',
     tags: [{
       tagName: '我的社交名片',
       options: [
@@ -241,6 +243,12 @@ export class FormPage {
     public http: Http,
     public alertCtrl: AlertController
   ) {
+    var _id = localStorage.getItem('_id');
+    if (_id) {
+      this.navCtrl.setRoot(StatePage)
+    } else {
+
+    }
   }
 
   ionViewDidLoad() {
@@ -301,6 +309,7 @@ export class FormPage {
          * 自动进入下一个报名通知页面
          */
         console.log(result);
+        localStorage.setItem('_id', result.data._id);
         this.sendPostRequest(result.data._id);
 
       } else {

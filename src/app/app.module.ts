@@ -2,11 +2,15 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { ToolService } from '../providers/tool-service';
+import { AppConfig } from '../providers/app-config';
+import { Rest } from '../providers/rest';
 import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 import { FormPage } from '../pages/form/form';
 import { SelectAgePage } from '../pages/select-age/select-age';
 import { SelectHeightPage } from '../pages/select-height/select-height';
 import { SelectTagsPage } from '../pages/select-tags/select-tags';
+import { StatePage } from '../pages/state/state';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -14,7 +18,8 @@ import { SelectTagsPage } from '../pages/select-tags/select-tags';
     FormPage,
     SelectAgePage,
     SelectHeightPage,
-    SelectTagsPage
+    SelectTagsPage,
+    StatePage
   ],
   imports: [
     IonicModule.forRoot(MyApp, {
@@ -29,8 +34,9 @@ import { SelectTagsPage } from '../pages/select-tags/select-tags';
     FormPage,
     SelectAgePage,
     SelectHeightPage,
-    SelectTagsPage
+    SelectTagsPage,
+    StatePage
   ],
-  providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }, ToolService]
+  providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }, ToolService, AppConfig, Rest]
 })
 export class AppModule { }
