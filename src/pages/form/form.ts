@@ -5,6 +5,7 @@ import { SelectHeightPage } from '../select-height/select-height';
 import { SelectTagsPage } from '../select-tags/select-tags';
 import { Http } from '@angular/http';
 import { StatePage } from '../state/state';
+import { AppConfig } from '../../providers/app-config';
 /*
 
   姓名【单行文本】（输入数字或者字母无效，只可输入2到4个汉字）
@@ -22,7 +23,7 @@ import { StatePage } from '../state/state';
 export class FormPage {
   phoneRegex = /^1[3-9]\d{9}$/;
   user = {
-    username: 'yang',
+    name: 'yang',
     gender: '男',
     phone: '13212780816',
     password: '123',
@@ -156,26 +157,39 @@ export class FormPage {
 
     anwsers: [{
       question: "我看过的一部深有感触的电影",
-      value: '曾经看过《初恋50次》，很轻松很浪漫，温馨感动、每天都有激情，每天都是新鲜的，虽然余生都只能靠记忆延续，但生命因此而充实。'
+      value: '曾经看过《初恋50次》，很轻松很浪漫，温馨感动、每天都有激情，每天都是新鲜的，虽然余生都只能靠记忆延续，但生命因此而充实。',
+      fullLength: 50
+
     }, {
       question: "最近爱听的一首歌",
-      value: "最近特别爱听《凉凉》，大爱古风，歌词好美，最爱那句“若回忆终不能相认，就让情分落九尘”"
+      value: "最近特别爱听《凉凉》，大爱古风，歌词好美，最爱那句“若回忆终不能相认，就让情分落九尘”",
+      fullLength: 50
+
     }, {
       question: "心中男神/女神",
-      value: "有一种相遇，一眼凝神，便是永恒；有一种心动，一生一次，只为一人，胡歌无可替代。"
+      value: "有一种相遇，一眼凝神，便是永恒；有一种心动，一生一次，只为一人，胡歌无可替代。",
+      fullLength: 50
+
     }, {
       question: "曾经看过的一本书",
-      value: "曾经看过《我心深处》，觉得世界很可悲，但人总要创造点什么价值来，虽然没什么用，但总是要活下去！"
+      value: "曾经看过《我心深处》，觉得世界很可悲，但人总要创造点什么价值来，虽然没什么用，但总是要活下去！",
+      fullLength: 50
+
     }, {
       question: "心目中理想的Ta",
-      value: "希望他是一个有趣的人，能和我来一次灵魂深处的交流！"
+      value: "希望他是一个有趣的人，能和我来一次灵魂深处的交流！",
+      fullLength: 50
+
     }, {
       question: "我的爱情宣言",
-      value: "不忘初心，方得始终"
+      value: "不忘初心，方得始终",
+      fullLength: 50
+
     },
     {
       question: "为什么想参加恋爱体验站活动?",
-      value: "相遇就是一场缘分，希望通过这种奇妙的相遇，谈一场不分手的恋爱！"
+      value: "相遇就是一场缘分，希望通过这种奇妙的相遇，谈一场不分手的恋爱！",
+      fullLength: 50
     }
     ],
     filterAge: {
@@ -241,7 +255,8 @@ export class FormPage {
     public navParams: NavParams,
     public modalCtrl: ModalController,
     public http: Http,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public appConfig: AppConfig
   ) {
     var _id = localStorage.getItem('_id');
     if (_id) {
@@ -274,7 +289,7 @@ export class FormPage {
   checkRegister(): boolean {
     var result = true;
     var notNull = [
-      this.user.username,
+      this.user.name,
       this.user.gender,
       this.user.age,
       this.user.height,
@@ -283,8 +298,6 @@ export class FormPage {
     ];
     notNull.forEach(item => item ? '' : result = false);
     this.user.tags.forEach(tag => tag.result.length > 0 ? '' : result = false);
-
-
     return result;
   }
 
@@ -302,15 +315,16 @@ export class FormPage {
 
 
   sendRegisteRequest() {
-    this.http.post('http://localhost:3000/rest.player', this.user).subscribe(rtn => {
+    this.http.post(this.appConfig.serverIp + 'player/newPlayer', this.user).subscribe(rtn => {
       var result = rtn.json();
       if (result.issuccess) {
         /**
          * 自动进入下一个报名通知页面
          */
+        // console.log(result);
         console.log(result);
         localStorage.setItem('_id', result.data._id);
-        this.sendPostRequest(result.data._id);
+        // this.sendPostRequest(result.data._id);
 
       } else {
         this.alertError(result.data);
@@ -318,18 +332,7 @@ export class FormPage {
     });
   }
 
-  sendPostRequest(_id: String) {
-    this.http.get('http://localhost:3000/record/newRecord?_id=' + _id).subscribe(rtn => {
-      const result = rtn.json();
-      if (result.issuccess) {
-        console.log(result);
-      } else {
-        alert(result);
-      }
-    });
 
-
-  }
 
   alertError(errorMsg, timeout = 3000) {
     var error = this.alertCtrl.create({
@@ -341,8 +344,6 @@ export class FormPage {
     setTimeout(function () {
       error.dismiss()
     }, timeout);
-
-
   }
 
 }

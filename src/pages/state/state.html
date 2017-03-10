@@ -26,10 +26,12 @@
       当前状态  
   
  
-        <ion-note [ngSwitch]="record.state" item-right>
+        <ion-note [ngSwitch]="currentRecord.state" item-right>
   <span *ngSwitchCase="0">已报名</span>
   <span *ngSwitchCase="1">已结束</span>
   <span *ngSwitchCase="2">未匹配上</span>
+  <span *ngSwitchCase="3">已经结束</span>
+  
   <span *ngSwitchDefault>参加比赛</span>
 </ion-note>
     </button>
@@ -38,7 +40,7 @@
   <ion-icon name="time"></ion-icon>
   
       参赛时间
-      <ion-note item-right>{{record.creatDt | date:'yyyy年MM日dd天'}}
+      <ion-note item-right>{{currentRecord.creatDt | date:'yyyy年MM日dd天'}}
 
       </ion-note>
     </button>
