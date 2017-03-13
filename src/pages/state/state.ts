@@ -17,6 +17,7 @@ import { AppConfig } from '../../providers/app-config';
 export class StatePage {
   player: any = {};
   currentRecord: any = {};
+  toPlayer: any;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -34,6 +35,7 @@ export class StatePage {
 
         this.currentRecord = result.data.currentRecord;
         this.player = result.data.player;
+        this.toPlayer = result.data.toPlayer;
 
       } else {
         alert(result.data);

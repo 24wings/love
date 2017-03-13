@@ -26,12 +26,12 @@
       当前状态  
   
  
-        <ion-note [ngSwitch]="currentRecord.state" item-right>
+<ion-note [ngSwitch]="currentRecord.state" item-right>
   <span *ngSwitchCase="0">已报名</span>
   <span *ngSwitchCase="1">已结束</span>
-  <span *ngSwitchCase="2">未匹配上</span>
+  <span *ngSwitchCase="2">匹配成功</span>
   <span *ngSwitchCase="3">已经结束</span>
-  
+  <span *ngSwitchCase="5">活动结束,经历了浪漫的故事</span>
   <span *ngSwitchDefault>参加比赛</span>
 </ion-note>
     </button>
@@ -49,4 +49,56 @@
             </ion-list>
         </ion-card-content>
     </ion-card>
+
+    <!--匹配对象的信息-->
+    <ion-card *ngIf="currentRecord.state==2&&toPlayer">
+        <ion-card-header>
+            匹配对象:{{toPlayer.name}}
+        </ion-card-header>
+        <ion-card-content>
+            <ion-list>
+                <ion-item>
+                    <ion-label item-left>姓名:</ion-label>
+                    <ion-note item-right> {{toPlayer.name}}</ion-note>
+
+                </ion-item>
+                <ion-item>
+                    <ion-label item-left>年龄:</ion-label>
+                    <ion-note item-right> {{toPlayer.age}}岁</ion-note>
+
+                </ion-item>
+                <ion-item>
+                    <ion-label item-left>性别:</ion-label>
+                    <ion-note item-right> {{toPlayer.gender}}</ion-note>
+
+                </ion-item>
+                <ion-item>
+                    <ion-label item-left>身高:</ion-label>
+                    <ion-note item-right> {{toPlayer.height}} cm</ion-note>
+
+                </ion-item>
+                <ion-item>
+                    <ion-label item-left>手机号:</ion-label>
+                    <ion-note item-right> {{toPlayer.phone}}</ion-note>
+
+                </ion-item>
+
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
+
+
 </ion-content>
+<ion-footer>
+    <ion-toolbar [ngSwitch]="currentRecord.state">
+
+
+        <button *ngSwitchCase="0" ion-button full>已报名</button>
+        <button *ngSwitchCase="1                              " ion-button full>已结束</button>
+        <button *ngSwitchCase="2" ion-button full>匹配成功</button>
+        <button *ngSwitchCase="3" ion-button full>已经结束</button>
+        <button *ngSwitchCase="5" ion-button full>活动结束,经历了浪漫的故事</button>
+
+    </ion-toolbar>
+
+</ion-footer>
