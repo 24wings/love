@@ -1,0 +1,54 @@
+<!--
+  Generated template for the Task page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<input #imageSelect type="file" hidden (change)="addImage(imageSelect.files[0])">
+
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>星期{{task.time+1}}的任务</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+            {{task.title}}
+        </ion-card-header>
+        <ion-card-content>
+            {{task.description}}
+        </ion-card-content>
+    </ion-card>
+
+
+    <ion-grid class="treatImages">
+        <ion-row>
+            <ion-col width-25 *ngFor="let image of images">
+                <img [src]="image" alt="" class="img-responsive">
+            </ion-col>
+
+            <ion-col width-25>
+                <img src="../assets/images/plus.png" alt="" class="plus" (click)="imageSelect.click()">
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
+
+
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+
+
+        <button ion-button full (click)="finishTask()" *ngIf="!task.isFinish">完成任务</button>
+        <button ion-button full color="primary">任务已完成</button>
+
+    </ion-toolbar>
+
+</ion-footer>

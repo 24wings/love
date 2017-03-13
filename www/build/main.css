@@ -21293,3 +21293,19 @@ page-select-tags ion-badge {
   font-size: 1.3em;
   padding: 3px 15px;
 }
+
+page-task .treatImages ion-row {
+  width: 93% !important;
+}
+
+page-task .treatImages ion-col {
+  padding: 0;
+  width: 22%;
+  height: 22vw;
+  margin-right: 3%;
+}
+
+page-task .treatImages ion-col .plus {
+  width: 100%;
+  height: 100%;
+}

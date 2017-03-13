@@ -10,6 +10,7 @@ import { SelectAgePage } from '../pages/select-age/select-age';
 import { SelectHeightPage } from '../pages/select-height/select-height';
 import { SelectTagsPage } from '../pages/select-tags/select-tags';
 import { StatePage } from '../pages/state/state';
+import { TaskPage } from '../pages/task/task';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { StatePage } from '../pages/state/state';
     SelectAgePage,
     SelectHeightPage,
     SelectTagsPage,
-    StatePage
+    StatePage,
+    TaskPage
   ],
   imports: [
     IonicModule.forRoot(MyApp, {
@@ -35,7 +37,8 @@ import { StatePage } from '../pages/state/state';
     SelectAgePage,
     SelectHeightPage,
     SelectTagsPage,
-    StatePage
+    StatePage,
+    TaskPage
   ],
   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }, ToolService, AppConfig, Rest]
 })

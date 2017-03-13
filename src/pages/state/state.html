@@ -94,8 +94,8 @@
 
 
         <button *ngSwitchCase="0" ion-button full>已报名</button>
-        <button *ngSwitchCase="1                              " ion-button full>已结束</button>
-        <button *ngSwitchCase="2" ion-button full>匹配成功</button>
+        <button *ngSwitchCase="1" ion-button full>已结束</button>
+        <button *ngSwitchCase="2" ion-button full (click)="beginTask()">开始任务</button>
         <button *ngSwitchCase="3" ion-button full>已经结束</button>
         <button *ngSwitchCase="5" ion-button full>活动结束,经历了浪漫的故事</button>
 

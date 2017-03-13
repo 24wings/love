@@ -4,6 +4,7 @@ import { Http } from '@angular/http';
 import { Rest } from '../../providers/rest';
 import { ToolService } from '../../providers/tool-service';
 import { AppConfig } from '../../providers/app-config';
+import { TaskPage } from '../task/task';
 /*
   Generated class for the State page.
 
@@ -36,14 +37,15 @@ export class StatePage {
         this.currentRecord = result.data.currentRecord;
         this.player = result.data.player;
         this.toPlayer = result.data.toPlayer;
-
       } else {
         alert(result.data);
       }
+    });
 
+  }
 
-    })
-
+  beginTask() {
+    this.navCtrl.push(TaskPage);
   }
 
   ionViewDidLoad() {
