@@ -324,6 +324,7 @@ export class FormPage {
         // console.log(result);
         console.log(result);
         localStorage.setItem('_id', result.data._id);
+        this.navCtrl.push(StatePage);
         // this.sendPostRequest(result.data._id);
 
       } else {

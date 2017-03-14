@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class AppConfig {
-  serverIp = "http://localhost:3000/";
+  serverIp = "http://www.wanviv.com:3000/";
 
   constructor(public http: Http) {
     console.log('Hello AppConfig Provider');
